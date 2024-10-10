@@ -2,7 +2,7 @@ Notes:
 	
 	- before running the analisys make a Warm up of the machine 5/10 iterations
 	- explain the dependent and independent varibles
-	- the independent varible are for e.g: type size content different vesrion of java and IDE
+	- the independent varible are for e.g: type size content 
 	- try to compute using the media and the median then analize which is better
 	- create some graphs maybe 
 	
