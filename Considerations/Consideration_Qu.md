@@ -11,7 +11,7 @@
   - Inverse sorted array
   - Array with repeated values
 - Array size
-- How many times an experiment is repeated
+- How many times an experiment is repeated 
 
 ## Control Variables
 - Hardware components:
