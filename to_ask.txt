@@ -1,0 +1,3 @@
+- can i modify the sorting algorithm?
+- number of comparison and swaps
+
