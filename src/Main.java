@@ -1,13 +1,14 @@
 import java.util.*;
 
+// ! before running the analisys make a Warm up of the machine 5/10 iterations
 public class Main {
     public static void main(String[] args) {
         // Define the possible parameters
         Sorter[] sorters = {
-                new BubbleSortUntilNoChange<>(),
-                new BubbleSortWhileNeeded<>(),
-                new QuickSortGPT<>(),
-                new SelectionSortGPT<>()
+//                new BubbleSortUntilNoChange<>(),
+//                new BubbleSortWhileNeeded<>(),
+                new QuickSortGPT<>()
+//                new SelectionSortGPT<>()
         };
 
         String[] dataDistributions = {"Random", "Pre-sorted", "Inverse-sorted"};
@@ -21,7 +22,7 @@ public class Main {
         // Loop through each combination of independent variables
         for (Sorter sorter : sorters) {
             sorterTimes.put(sorter, new ArrayList<>());  // Initialize time tracking for each sorter
-
+            System.out.println();
             for (String distribution : dataDistributions) {
                 for (String dataType : dataTypes) {
                     for (int arraySize : arraySizes) {
