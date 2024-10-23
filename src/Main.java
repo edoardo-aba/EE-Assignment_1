@@ -5,23 +5,23 @@ public class Main {
     public static void main(String[] args) {
         // Define the possible parameters
         Sorter[] sorters = {
-//                new BubbleSortUntilNoChange<>(),
-//                new BubbleSortWhileNeeded<>(),
-                new QuickSortGPT<>()
-//                new SelectionSortGPT<>()
+                new BubbleSortUntilNoChange<>(),
+                new BubbleSortWhileNeeded<>(),
+                new QuickSortGPT<>(),
+                new SelectionSortGPT<>()
         };
 
-        String[] dataDistributions = {"Random", "Pre-sorted", "Inverse-sorted"};
-        String[] dataTypes = {"Integer", "Double", "String"};
-        String[] inputSizes = {"Short", "Long"};
-        int[] arraySizes = {250, 2500, 25000};
+        String[] dataDistributions = { "Random", "Pre-sorted", "Inverse-sorted" };
+        String[] dataTypes = { "Integer", "Double", "String" };
+        String[] inputSizes = { "Short", "Long" };
+        int[] arraySizes = { 250, 2500, 25000 };
 
         // Map to store individual execution times for each sorter
         Map<Sorter, List<Long>> sorterTimes = new HashMap<>();
 
         // Loop through each combination of independent variables
         for (Sorter sorter : sorters) {
-            sorterTimes.put(sorter, new ArrayList<>());  // Initialize time tracking for each sorter
+            sorterTimes.put(sorter, new ArrayList<>()); // Initialize time tracking for each sorter
             System.out.println();
             for (String distribution : dataDistributions) {
                 for (String dataType : dataTypes) {
@@ -46,8 +46,10 @@ public class Main {
                             sorterTimes.get(sorter).add(executionTime);
 
                             // Print or log results
-                            System.out.printf("Sorter: %s, Distribution: %s, DataType: %s, ArraySize: %d, InputSize: %s, Time: %.3f ms\n",
-                                    sorter.getClass().getSimpleName(), distribution, dataType, arraySize, inputSize, executionTime / 1_000_000.0);
+                            System.out.printf(
+                                    "Sorter: %s, Distribution: %s, DataType: %s, ArraySize: %d, InputSize: %s, Time: %.3f ms\n",
+                                    sorter.getClass().getSimpleName(), distribution, dataType, arraySize, inputSize,
+                                    executionTime / 1_000_000.0);
                         }
                     }
                 }
@@ -60,8 +62,8 @@ public class Main {
         // Calculate the average time and standard deviation for each sorter
         for (Sorter sorter : sorters) {
             List<Long> times = sorterTimes.get(sorter);
-            double averageTime = calculateMean(times) / 1_000_000.0;  // Convert to milliseconds
-            double stdDevTime = calculateStandardDeviation(times, averageTime) / 1_000_000.0;  // Convert to milliseconds
+            double averageTime = calculateMean(times) / 1_000_000.0; // Convert to milliseconds
+            double stdDevTime = calculateStandardDeviation(times, averageTime) / 1_000_000.0; // Convert to milliseconds
 
             sorterStatisticsList.add(new SorterStatistics(sorter.getClass().getSimpleName(), averageTime, stdDevTime));
         }
@@ -73,7 +75,8 @@ public class Main {
         System.out.println("\nAverage execution times (sorted by mean):");
         for (SorterStatistics sorterStatistics : sorterStatisticsList) {
             System.out.printf("Sorter: %s, Average Time: %.3f ms, Std Dev: %.3f ms\n",
-                    sorterStatistics.getSorterName(), sorterStatistics.getAverageTime(), sorterStatistics.getStandardDeviation());
+                    sorterStatistics.getSorterName(), sorterStatistics.getAverageTime(),
+                    sorterStatistics.getStandardDeviation());
         }
     }
 
@@ -135,7 +138,8 @@ public class Main {
     private static double calculateStandardDeviation(List<Long> times, double mean) {
         double sumSquaredDifferences = 0.0;
         for (Long time : times) {
-            sumSquaredDifferences += Math.pow(time - mean * 1_000_000.0, 2);  // Convert mean to nanoseconds for accurate calculation
+            sumSquaredDifferences += Math.pow(time - mean * 1_000_000.0, 2); // Convert mean to nanoseconds for accurate
+                                                                             // calculation
         }
         return Math.sqrt(sumSquaredDifferences / times.size());
     }
