@@ -14,7 +14,7 @@ public class Main {
         String[] dataDistributions = {"Random", "Pre-sorted", "Inverse-sorted"};
         String[] dataTypes = {"Integer", "Double", "String"};
         String[] inputSizes = {"Short", "Long"};
-        int[] arraySizes = {100, 10000, 100000};
+        int[] arraySizes = {250, 2500, 25000};
 
         // Map to store individual execution times for each sorter
         Map<Sorter, List<Long>> sorterTimes = new HashMap<>();
