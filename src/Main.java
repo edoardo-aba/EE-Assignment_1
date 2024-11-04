@@ -1,6 +1,6 @@
 import java.util.*;
 
-// ! before running the analisys make a Warm up of the machine 5/10 iterations
+// ! before running the analysis make a Warm up of the machine 5/10 iterations
 public class Main {
     public static void main(String[] args) {
         // Define the possible parameters
@@ -66,6 +66,16 @@ public class Main {
             double stdDevTime = calculateStandardDeviation(times, averageTime) / 1_000_000.0; // Convert to milliseconds
 
             sorterStatisticsList.add(new SorterStatistics(sorter.getClass().getSimpleName(), averageTime, stdDevTime));
+
+            // Calculate and print the five-number summary
+            List<Double> fiveNumberSummary = calculateFiveNumberSummary(times);
+            System.out.printf("\nSorter: %s, Five-Number Summary (ms): Min: %.3f, Q1: %.3f, Median: %.3f, Q3: %.3f, Max: %.3f\n",
+                    sorter.getClass().getSimpleName(),
+                    fiveNumberSummary.get(0),
+                    fiveNumberSummary.get(1),
+                    fiveNumberSummary.get(2),
+                    fiveNumberSummary.get(3),
+                    fiveNumberSummary.get(4));
         }
 
         // Sort the sorters based on their average time
@@ -138,10 +148,32 @@ public class Main {
     private static double calculateStandardDeviation(List<Long> times, double mean) {
         double sumSquaredDifferences = 0.0;
         for (Long time : times) {
-            sumSquaredDifferences += Math.pow(time - mean * 1_000_000.0, 2); // Convert mean to nanoseconds for accurate
-                                                                             // calculation
+            sumSquaredDifferences += Math.pow(time - mean * 1_000_000.0, 2); // Convert mean to nanoseconds for accurate calculation
         }
         return Math.sqrt(sumSquaredDifferences / times.size());
+    }
+
+    // Method to calculate the five-number summary (min, Q1, median, Q3, max)
+    private static List<Double> calculateFiveNumberSummary(List<Long> times) {
+        List<Double> sortedTimes = new ArrayList<>();
+        for (Long time : times) {
+            sortedTimes.add(time / 1_000_000.0); // Convert to milliseconds
+        }
+        Collections.sort(sortedTimes);
+
+        double min = sortedTimes.get(0);
+        double q1 = calculatePercentile(sortedTimes, 25);
+        double median = calculatePercentile(sortedTimes, 50);
+        double q3 = calculatePercentile(sortedTimes, 75);
+        double max = sortedTimes.get(sortedTimes.size() - 1);
+
+        return Arrays.asList(min, q1, median, q3, max);
+    }
+
+    // Utility method to calculate a percentile
+    private static double calculatePercentile(List<Double> sortedList, double percentile) {
+        int index = (int) Math.ceil((percentile / 100.0) * sortedList.size()) - 1;
+        return sortedList.get(index);
     }
 }
 
